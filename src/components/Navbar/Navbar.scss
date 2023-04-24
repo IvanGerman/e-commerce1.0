@@ -1,0 +1,31 @@
+.navbar {
+  height: 80px;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+
+    .item {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+    .center {
+      font-size: 30px;
+      letter-spacing: 2px;
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+  }
+}
