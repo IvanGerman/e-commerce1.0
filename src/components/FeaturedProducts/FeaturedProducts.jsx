@@ -1,14 +1,22 @@
 import React from 'react';
 
 import './FeaturedProducts.scss';
+import { Card } from '../Card/Card';
+
+import Image1 from './../../assets/images/featprod1a.jpeg';
+import Image2 from './../../assets/images/featprod1b.jpeg';
+import Image3 from './../../assets/images/featprod2.webp';
+import Image4 from './../../assets/images/featprod3.webp';
+import Image5 from './../../assets/images/featprod4.webp';
+
 
 export const FeaturedProducts = ( { type } ) => {
 
   const data = [
     {
       id: 1,
-      img: './../../assets/images/featprod1a.jpeg',
-      img2: './fdf',
+      img: Image1,
+      img2: Image2,
       title: 'Long Sleeve Graphic T-Shirt',
       isNew: true,
       oldPrice: 19,
@@ -16,7 +24,7 @@ export const FeaturedProducts = ( { type } ) => {
     },
     {
       id: 2,
-      img: './fdf',
+      img: Image3,
       title: 'Coat',
       isNew: true,
       oldPrice: 19,
@@ -24,17 +32,17 @@ export const FeaturedProducts = ( { type } ) => {
     },
     {
       id: 3,
-      img: './fdf',
+      img: Image4,
       title: 'Skirt',
-      isNew: true,
+      isNew: false,
       oldPrice: 19,
       price: 12
     },
     {
       id: 4,
-      img: './fdf',
+      img: Image5,
       title: 'Hat',
-      isNew: true,
+      isNew: false,
       oldPrice: 19,
       price: 12
     }
@@ -53,7 +61,11 @@ export const FeaturedProducts = ( { type } ) => {
         </p>
       </div>
       <div className="bottom">
-        
+        {
+          data.map( (item) => {
+            return <Card item={item} key={item.id} />
+          })
+        }
       </div>
     </div>
   )
