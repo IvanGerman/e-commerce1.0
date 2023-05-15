@@ -56,7 +56,7 @@ export const Navbar = () => {
             <SearchIcon/>
             <PersonOutlineOutlinedIcon/>
             <FavoriteBorderOutlinedIcon/>
-            <div className="cartIcon" onClick={() => {console.log('cartIcon',open); setOpen(!open)}}>
+            <div className="cartIcon" onClick={() => { setOpen(!open); console.log('cartIcon',open); }}>
               <ShoppingCartOutlinedIcon/>
               <span>0</span>
             </div>
