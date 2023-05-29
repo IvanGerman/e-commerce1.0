@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import './FeaturedProducts.scss';
 import { Card } from '../Card/Card';
@@ -12,41 +13,62 @@ import Image5 from './../../assets/images/featprod4.webp';
 
 export const FeaturedProducts = ( { type } ) => {
 
-  const data = [
-    {
-      id: 1,
-      img: Image1,
-      img2: Image2,
-      title: 'Long Sleeve Graphic T-Shirt',
-      isNew: true,
-      oldPrice: 19,
-      price: 12
-    },
-    {
-      id: 2,
-      img: Image3,
-      title: 'Coat',
-      isNew: true,
-      oldPrice: 19,
-      price: 12
-    },
-    {
-      id: 3,
-      img: Image4,
-      title: 'Skirt',
-      isNew: false,
-      oldPrice: 19,
-      price: 12
-    },
-    {
-      id: 4,
-      img: Image5,
-      title: 'Hat',
-      isNew: false,
-      oldPrice: 19,
-      price: 12
-    }
-  ];
+  // const data = [
+  //   {
+  //     id: 1,
+  //     img: Image1,
+  //     img2: Image2,
+  //     title: 'Long Sleeve Graphic T-Shirt',
+  //     isNew: true,
+  //     oldPrice: 19,
+  //     price: 12
+  //   },
+  //   {
+  //     id: 2,
+  //     img: Image3,
+  //     title: 'Coat',
+  //     isNew: true,
+  //     oldPrice: 19,
+  //     price: 12
+  //   },
+  //   {
+  //     id: 3,
+  //     img: Image4,
+  //     title: 'Skirt',
+  //     isNew: false,
+  //     oldPrice: 19,
+  //     price: 12
+  //   },
+  //   {
+  //     id: 4,
+  //     img: Image5,
+  //     title: 'Hat',
+  //     isNew: false,
+  //     oldPrice: 19,
+  //     price: 12
+  //   }
+  // ];
+
+  const [ data, setData ] = useState([]);
+
+  useEffect( () => { 
+    const fetchData = async () => {
+      try {
+        const response = await axios.get( process.env.REACT_APP_API_URL + '/products?populate=*', {
+          headers : {
+            Authorization: 'bearer ' + process.env.REACT_APP_API_TOKEN
+          },
+          
+        });
+        console.log(response.data.data);
+        setData(response.data.data);
+      }
+      catch(err) {
+        console.log(err);
+      };
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className='featuredProducts'>
