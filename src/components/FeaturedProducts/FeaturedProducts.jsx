@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import './FeaturedProducts.scss';
 import { Card } from '../Card/Card';
+import useFetch from '../../hooks/useFetch';
 
-import Image1 from './../../assets/images/featprod1a.jpeg';
-import Image2 from './../../assets/images/featprod1b.jpeg';
-import Image3 from './../../assets/images/featprod2.webp';
-import Image4 from './../../assets/images/featprod3.webp';
-import Image5 from './../../assets/images/featprod4.webp';
+// import Image1 from './../../assets/images/featprod1a.jpeg';
+// import Image2 from './../../assets/images/featprod1b.jpeg';
+// import Image3 from './../../assets/images/featprod2.webp';
+// import Image4 from './../../assets/images/featprod3.webp';
+// import Image5 from './../../assets/images/featprod4.webp';
 
 
 export const FeaturedProducts = ( { type } ) => {
@@ -49,27 +49,8 @@ export const FeaturedProducts = ( { type } ) => {
   //   }
   // ];
 
-  const [ data, setData ] = useState([]);
-
-  useEffect( () => { 
-    const fetchData = async () => {
-      try {
-        const response = await axios.get( process.env.REACT_APP_API_URL + `/products?populate=*&[filters][type][$eq]=${type}`, {
-          headers : {
-            Authorization: 'bearer ' + process.env.REACT_APP_API_TOKEN
-          },
-          
-        });
-        console.log(response.data.data);
-        setData(response.data.data);
-      }
-      catch(err) {
-        console.log(err);
-      };
-    };
-    fetchData();
-  }, []);
-
+  const { data, loading, error } =  useFetch(`/products?populate=*&[filters][type][$eq]=${type}`)
+  
   return (
     <div className='featuredProducts'>
       <div className="top">
@@ -84,7 +65,7 @@ export const FeaturedProducts = ( { type } ) => {
       </div>
       <div className="bottom">
         {
-          data.map( (item) => {
+          loading ? "loading" : data.map( (item) => {
             return <Card item={item} key={item.id} />
           })
         }
