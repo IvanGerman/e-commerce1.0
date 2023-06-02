@@ -8,8 +8,26 @@ import Image3 from './../../assets/images/featprod2.webp';
 import Image4 from './../../assets/images/featprod3.webp';
 import Image5 from './../../assets/images/featprod4.webp';
 import { Card } from '../Card/Card';
+import useFetch from '../../hooks/useFetch';
 
-export const List = () => {
+export const List = ( { subCats, maxPrice, sort, catId } ) => { 
+
+  let filteredSubCats = '';
+  subCats.forEach(element => {
+    filteredSubCats += `&[filters][sub_categories][id][$eq]=${element}`
+  });
+  
+
+  const { data, loading, error } = useFetch(
+    `/products?populate=*&[filters][categories][id]=${catId}${filteredSubCats}`
+  );
+
+  // const { data, loading, error } =  useFetch(`/products?populate=*&[filters][categories][id]=${catId}${subCats.map( (item) => {
+  //   return `&[filters][sub_categories][id][$eq]=${item}`
+  //   })
+  //  }`
+  // );
+
 
   // const data = [
   //   {
@@ -49,11 +67,10 @@ export const List = () => {
 
   return (
     <div className='list'>
-      {/* {
-          data.map( (item) => {
+      { loading ? 'loading' : data.map( (item) => {
             return <Card item={item} key={item.id} />
           })
-        } */}
+        }
     </div>
   )
 }

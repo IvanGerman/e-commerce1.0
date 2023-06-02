@@ -112,8 +112,8 @@ export const Products = () => {
           className="catImg"
           src={Image1}
           alt=""
-        />
-        <List catId={catId} maxPrice={maxPrice} sort={sort} />
+        /> {console.log('catId--',catId)}
+        <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats} />
       </div>
     </div>
   )
