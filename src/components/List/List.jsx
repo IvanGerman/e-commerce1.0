@@ -19,7 +19,7 @@ export const List = ( { subCats, maxPrice, sort, catId } ) => {
   
 
   const { data, loading, error } = useFetch(
-    `/products?populate=*&[filters][categories][id]=${catId}${filteredSubCats}`
+    `/products?populate=*&[filters][categories][id]=${catId}${filteredSubCats}&[filters][price][$lte]=${maxPrice}&sort=price:${sort}`
   );
 
   // const { data, loading, error } =  useFetch(`/products?populate=*&[filters][categories][id]=${catId}${subCats.map( (item) => {

@@ -5,27 +5,39 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BalanceIcon from "@mui/icons-material/Balance";
 
 import './Product.scss';
+import useFetch from '../../hooks/useFetch';
+import { useParams } from 'react-router-dom';
 
-import Image1 from './../../assets/images/prod-single1.webp';
-import Image2 from './../../assets/images/prod-single2.jpeg';
+// import Image1 from './../../assets/images/prod-single1.webp';
+// import Image2 from './../../assets/images/prod-single2.jpeg';
 
 
 export const Product = () => {
 
-  const [selectedImage, setSelectedImage] = useState(0);
+  const id = useParams().id;
+  const [selectedImage, setSelectedImage] = useState('img');
   const [quantity, setQuantity] = useState(1);
 
-  const images = [Image1, Image2];
+
+  
+  const { data, loading, error } = useFetch(
+    `/products/${id}?populate=*`
+  );
+  console.log(loading);
+
+  // const images = [Image1, Image2];
   
   return (
     <div className='product'>
+      { loading ? 'loading' : ( 
+      <>
       <div className="left">
           <div className="images">
-              <img  src={images[0]} alt="" onClick={(event) => { setSelectedImage(0) }} />
-              <img  src={images[1]} alt="" onClick={(event) => { setSelectedImage(1) }} />
+              <img  src={process.env.REACT_APP_UPLOAD_URL + data?.attributes?.img?.data?.attributes?.url} alt="" onClick={(event) => { setSelectedImage('img') }} />
+              <img  src={process.env.REACT_APP_UPLOAD_URL + data?.attributes?.img2?.data?.attributes?.url} alt="" onClick={(event) => { setSelectedImage('img2') }} />
           </div>
           <div className="mainImg">
-            <img  src={images[selectedImage]} alt="" />
+            <img  src={process.env.REACT_APP_UPLOAD_URL + data?.attributes[selectedImage]?.data?.attributes?.url} alt="" />
           </div>
       </div>
 
@@ -63,6 +75,8 @@ export const Product = () => {
           <span>FAQ</span>
         </div>
       </div>
+      </>
+      )}
     </div>
   )
 }

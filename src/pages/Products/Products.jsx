@@ -12,7 +12,7 @@ export const Products = () => {
 
   const catId = parseInt( useParams().id );
   const [maxPrice, setMaxPrice] = useState(1000);
-  const [sort, setSort] = useState(null);
+  const [sort, setSort] = useState('asc');
   const [selectedSubCats, setSelectedSubCats] = useState([]);
 
   const { data, loading, error } =  useFetch(`/sub-categories?[filters][categories][id][$eq]=${catId}`);
@@ -24,8 +24,8 @@ export const Products = () => {
       return item !== value;
     }))
   }
-  console.log(data);
-  console.log(selectedSubCats);
+  // console.log(data);
+  // console.log(selectedSubCats);
 
   return (
     <div className="products">
@@ -112,7 +112,7 @@ export const Products = () => {
           className="catImg"
           src={Image1}
           alt=""
-        /> {console.log('catId--',catId)}
+        /> 
         <List catId={catId} maxPrice={maxPrice} sort={sort} subCats={selectedSubCats} />
       </div>
     </div>
