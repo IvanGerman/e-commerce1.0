@@ -6,12 +6,12 @@ const useFetch = (url) => {
 
 
   const [ data, setData ] = useState([]);
-  const [ loading, setLoading ] = useState(false);
+  const [ loading, setLoading ] = useState(true); //change from false to true, otherwise Product page bug
   const [ error, setError ] = useState(false);
 
 
   useEffect( () => { 
-    const fetchData = async () => {
+    const fetchData = async () => {   
 
       try {
         setLoading(true);  
@@ -21,7 +21,7 @@ const useFetch = (url) => {
       catch(err) {
         setError(true);
       };
-      setLoading(false);
+      setLoading(false);  
     };
     fetchData();
   }, [url]);
