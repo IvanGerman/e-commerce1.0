@@ -9,9 +9,11 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Cart } from '../Cart/Cart';
+import { useSelector } from 'react-redux';
 
 export const Navbar = () => {
 
+  const products = useSelector(state => state.cart.products);
   const [ open, setOpen ] = useState(false);
 
   return (
@@ -56,9 +58,9 @@ export const Navbar = () => {
             <SearchIcon/>
             <PersonOutlineOutlinedIcon/>
             <FavoriteBorderOutlinedIcon/>
-            <div className="cartIcon" onClick={() => { setOpen(!open); console.log('cartIcon',open); }}>
+            <div className="cartIcon" onClick={() => { setOpen(!open); }}>
               <ShoppingCartOutlinedIcon/>
-              <span>0</span>
+              <span>{products.length}</span>
             </div>
           </div>
         </div>
