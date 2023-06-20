@@ -7,6 +7,9 @@ import Image1 from './../../assets/images/featprod1a.jpeg';
 import Image2 from './../../assets/images/featprod1b.jpeg';
 import { removeItem, resetCart } from '../../redux/cartReducer';
 
+import {makeRequest} from '../../makeRequest';
+import {loadStripe} from '@stripe/stripe-js';
+
 
 export const Cart = () => {
 
@@ -19,7 +22,10 @@ export const Cart = () => {
       total += element.quantity * element.price;
     });
     return total.toFixed(2);
-  }
+  };
+
+  const stripePromise = loadStripe('pk_test_51NKIhnIibO3PnGTuyKRqJaMm9aAFSv2cc8tMvfoAjAHDIEYwEgo8NRImZkomJd17y6VgzQzjKtDn1egdkfTnhjwK00DBpOtm8j');
+
   // const data = [
   //   {
   //     id: 1,
@@ -33,6 +39,21 @@ export const Cart = () => {
   //   },
   // ];
 
+  const handlePayment = async () => {
+    try {
+      const stripe = await stripePromise;
+
+      const res = await makeRequest.post('/orders', {
+        products,
+      });
+
+      await stripe.redirectToCheckout({
+        sessionId: res.data.stripeSession.id
+      })
+    } catch(err) {
+      console.log(err);
+    }
+  }
   return(
     <div className='cart'>
       <h1>Products in your cart</h1>
@@ -52,7 +73,7 @@ export const Cart = () => {
         <span>SUBTOTAL</span>
         <span>${totalPrice()}</span>
       </div>
-      <button>PROCEED TO CHECKOUT</button>
+      <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
       <span className="reset" onClick={() => { dispatch(resetCart())}}>
         Reset Cart
       </span>
